@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -7,10 +7,16 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit {
+  @Output() recipeWasSelected = new EventEmitter<Recipe>();
+
   recipes: Recipe[] = [
     new Recipe(
       'Oven Roasted Crispy Pork Belly',
-      'This is simply a test',
+      `This is a pork belly that’s slow-roasted so the fat renders and cooks the belly confit-style in its own fat. The result? Ridiculously juicy, impossibly tender yet still-sliceable meat, crowned with the most amazing crispy crackling of your life. 
+
+      It comes down to three simple, game-changing techniques: 1. Do NOT score the skin; 2. Low heat followed by high heat; 3. Keep the pork level using balls of foil.
+      
+      Perfect meat, perfect crackling … Every. Single. Time!`,
       'https://pinchandswirl.com/wp-content/uploads/2020/10/Crispy-Pork-Belly_square.jpg'
     ),
     new Recipe(
@@ -23,4 +29,8 @@ export class RecipeListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  onRecipeSelected(recipe: Recipe) {
+    this.recipeWasSelected.emit(recipe);
+  }
 }
